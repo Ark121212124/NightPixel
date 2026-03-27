@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 const port = process.env.PORT || 3000;
-const publicDir = path.join(__dirname, "nightpixel_full");
+const publicDir = __dirname;
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -83,7 +83,7 @@ const server = http.createServer((req, res) => {
   }
 
   const safePath = path.normalize(reqPath).replace(/^(\.\.[/\\])+/, "");
-  let filePath = path.join(publicDir, safePath);
+  const filePath = path.join(publicDir, safePath);
 
   if (!filePath.startsWith(publicDir)) {
     res.writeHead(403, { "Content-Type": "text/plain; charset=utf-8" });
@@ -94,9 +94,9 @@ const server = http.createServer((req, res) => {
   fs.stat(filePath, (err, stats) => {
     if (!err && stats.isFile()) {
       const ext = path.extname(filePath).toLowerCase();
-      res.writeHead(200, {
-        "Content-Type": mimeTypes[ext] || "application/octet-stream"
-      });
+      const contentType = mimeTypes[ext] || "application/octet-stream";
+
+      res.writeHead(200, { "Content-Type": contentType });
       fs.createReadStream(filePath).pipe(res);
       return;
     }
