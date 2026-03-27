@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NightPixel — Магазин техники</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/site.js" defer></script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo"><span>NightPixel</span></div>
+    <nav>
+      <a data-page href="index.html">Главная</a>
+      <a data-page href="about.html">О пути</a>
+      <a data-page href="portfolio.html">Портфолио</a>
+      <a data-page href="shop.html">Магазин</a>
+      <a data-page href="cart.html">Корзина <span class="cart-badge" data-cart-count>0</span></a>
+      <a data-page href="contact.html">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero page-hero">
+  <div class="hero-shell">
+    <span class="badge">Техно-магазин</span>
+    <h1>NightPixel Tech Store</h1>
+    <p class="lead">Каталог компьютерной техники и периферии: ноутбуки, мониторы, клавиатуры, мыши, гарнитуры и накопители. В магазине есть бренды, фильтр по категориям, скидки, старая и новая цена, отдельные страницы товаров и корзина с оплатой по QR-коду.</p>
+    <div class="hero-buttons">
+      <a class="btn" href="#catalog">Смотреть каталог</a>
+      <a class="btn-outline" href="cart.html">Перейти в корзину</a>
+    </div>
+  </div>
+</section>
+
+<section id="catalog">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-kicker">Каталог техники</span>
+        <h2 class="section-title">Бренды и популярные категории</h2>
+      </div>
+      <p>Подборка оформлена в стиле современного интернет-магазина техники. Можно быстро переключаться между категориями и открывать отдельную страницу любого товара.</p>
+    </div>
+
+    <div class="brand-strip">
+      <span class="brand-pill">NightPixel</span>
+      <span class="brand-pill">ViewCore</span>
+      <span class="brand-pill">MechWave</span>
+      <span class="brand-pill">Pulse</span>
+      <span class="brand-pill">SoundForce</span>
+      <span class="brand-pill">FlashCore</span>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">Все товары</button>
+      <button class="filter-btn" data-filter="laptops">Ноутбуки</button>
+      <button class="filter-btn" data-filter="monitors">Мониторы</button>
+      <button class="filter-btn" data-filter="keyboards">Клавиатуры</button>
+      <button class="filter-btn" data-filter="mice">Мыши</button>
+      <button class="filter-btn" data-filter="audio">Аудио</button>
+      <button class="filter-btn" data-filter="storage">Накопители</button>
+    </div>
+
+    <div class="shop-grid">
+      <article class="product-card" data-category="laptops" data-brand="nightpixel">
+        <div class="product-thumb variant-1"><span class="discount-badge">-13%</span></div>
+        <div class="product-headline">
+          <span class="product-category">Ноутбуки</span>
+          <span class="brand-chip">NightPixel</span>
+        </div>
+        <h3>NightPixel G15 RTX</h3>
+        <p>Игровой ноутбук с RTX, экраном 144 Гц и быстрым SSD для игр, учёбы и монтажа.</p>
+        <div class="price-block">
+          <strong class="price-new">89 990 ₽</strong>
+          <span class="price-old">102 990 ₽</span>
+        </div>
+        <div class="tags"><span class="chip">NightPixel</span><span class="chip">Ноутбуки</span><span class="chip">Гарантия 12 мес.</span></div>
+        <div class="product-actions">
+          <a class="btn-outline" href="product-laptop-g15.html">Подробнее</a>
+          <button class="btn add-to-cart" data-id="laptop-g15" data-name="NightPixel G15 RTX" data-price="89990">В корзину</button>
+        </div>
+      </article>
+      <article class="product-card" data-category="monitors" data-brand="viewcore">
+        <div class="product-thumb variant-2"><span class="discount-badge">-16%</span></div>
+        <div class="product-headline">
+          <span class="product-category">Мониторы</span>
+          <span class="brand-chip">ViewCore</span>
+        </div>
+        <h3>ViewCore 27Q Gaming</h3>
+        <p>27-дюймовый QHD-монитор с частотой 165 Гц для игр, кодинга и повседневной работы.</p>
+        <div class="price-block">
+          <strong class="price-new">24 490 ₽</strong>
+          <span class="price-old">28 990 ₽</span>
+        </div>
+        <div class="tags"><span class="chip">ViewCore</span><span class="chip">Мониторы</span><span class="chip">Гарантия 12 мес.</span></div>
+        <div class="product-actions">
+          <a class="btn-outline" href="product-monitor-27q.html">Подробнее</a>
+          <button class="btn add-to-cart" data-id="monitor-27q" data-name="ViewCore 27Q Gaming" data-price="24490">В корзину</button>
+        </div>
+      </article>
+      <article class="product-card" data-category="keyboards" data-brand="mechwave">
+        <div class="product-thumb variant-3"><span class="discount-badge">-18%</span></div>
+        <div class="product-headline">
+          <span class="product-category">Клавиатуры</span>
+          <span class="brand-chip">MechWave</span>
+        </div>
+        <h3>MechWave K87 RGB</h3>
+        <p>Компактная механическая клавиатура TKL с RGB-подсветкой и быстрым откликом.</p>
+        <div class="price-block">
+          <strong class="price-new">6 990 ₽</strong>
+          <span class="price-old">8 490 ₽</span>
+        </div>
+        <div class="tags"><span class="chip">MechWave</span><span class="chip">Клавиатуры</span><span class="chip">Гарантия 12 мес.</span></div>
+        <div class="product-actions">
+          <a class="btn-outline" href="product-keyboard-k87.html">Подробнее</a>
+          <button class="btn add-to-cart" data-id="keyboard-k87" data-name="MechWave K87 RGB" data-price="6990">В корзину</button>
+        </div>
+      </article>
+      <article class="product-card" data-category="mice" data-brand="pulse">
+        <div class="product-thumb variant-4"><span class="discount-badge">-21%</span></div>
+        <div class="product-headline">
+          <span class="product-category">Мыши</span>
+          <span class="brand-chip">Pulse</span>
+        </div>
+        <h3>Pulse X3 Wireless</h3>
+        <p>Лёгкая беспроводная мышь с точным сенсором и удобной формой для долгих сессий.</p>
+        <div class="price-block">
+          <strong class="price-new">4 590 ₽</strong>
+          <span class="price-old">5 790 ₽</span>
+        </div>
+        <div class="tags"><span class="chip">Pulse</span><span class="chip">Мыши</span><span class="chip">Гарантия 12 мес.</span></div>
+        <div class="product-actions">
+          <a class="btn-outline" href="product-mouse-x3.html">Подробнее</a>
+          <button class="btn add-to-cart" data-id="mouse-x3" data-name="Pulse X3 Wireless" data-price="4590">В корзину</button>
+        </div>
+      </article>
+      <article class="product-card" data-category="audio" data-brand="soundforce">
+        <div class="product-thumb variant-5"><span class="discount-badge">-19%</span></div>
+        <div class="product-headline">
+          <span class="product-category">Аудио</span>
+          <span class="brand-chip">SoundForce</span>
+        </div>
+        <h3>SoundForce H7 Pro</h3>
+        <p>Игровая гарнитура с объёмным звуком 7.1 и качественным микрофоном.</p>
+        <div class="price-block">
+          <strong class="price-new">7 490 ₽</strong>
+          <span class="price-old">9 190 ₽</span>
+        </div>
+        <div class="tags"><span class="chip">SoundForce</span><span class="chip">Аудио</span><span class="chip">Гарантия 12 мес.</span></div>
+        <div class="product-actions">
+          <a class="btn-outline" href="product-headset-h7.html">Подробнее</a>
+          <button class="btn add-to-cart" data-id="headset-h7" data-name="SoundForce H7 Pro" data-price="7490">В корзину</button>
+        </div>
+      </article>
+      <article class="product-card" data-category="storage" data-brand="flashcore">
+        <div class="product-thumb variant-6"><span class="discount-badge">-18%</span></div>
+        <div class="product-headline">
+          <span class="product-category">Накопители</span>
+          <span class="brand-chip">FlashCore</span>
+        </div>
+        <h3>FlashCore NVMe 1TB</h3>
+        <p>Скоростной SSD NVMe на 1 ТБ для системы, игр, проектов и быстрой загрузки.</p>
+        <div class="price-block">
+          <strong class="price-new">8 990 ₽</strong>
+          <span class="price-old">10 990 ₽</span>
+        </div>
+        <div class="tags"><span class="chip">FlashCore</span><span class="chip">Накопители</span><span class="chip">Гарантия 12 мес.</span></div>
+        <div class="product-actions">
+          <a class="btn-outline" href="product-ssd-1tb.html">Подробнее</a>
+          <button class="btn add-to-cart" data-id="ssd-1tb" data-name="FlashCore NVMe 1TB" data-price="8990">В корзину</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer>
+  NightPixel © 2026<br>Магазин компьютерной техники и периферии
+</footer>
+</body>
+</html>

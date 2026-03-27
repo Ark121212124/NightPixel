@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NightPixel — Корзина</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/site.js" defer></script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="logo"><span>NightPixel</span></div>
+    <nav>
+      <a data-page href="index.html">Главная</a>
+      <a data-page href="about.html">О пути</a>
+      <a data-page href="portfolio.html">Портфолио</a>
+      <a data-page href="shop.html">Магазин</a>
+      <a data-page href="cart.html">Корзина <span class="cart-badge" data-cart-count>0</span></a>
+      <a data-page href="contact.html">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero page-hero">
+  <div class="hero-shell">
+    <span class="badge">Ваш заказ</span>
+    <h1>Корзина и оплата</h1>
+    <p class="lead">Проверьте выбранную технику, количество и итоговую сумму. После этого можно оплатить заказ через QR-код и подтвердить покупку.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container cart-layout">
+    <div class="panel cart-panel">
+      <div class="section-head cart-head">
+        <div>
+          <span class="section-kicker">Список</span>
+          <h2 class="section-title cart-title">Товары в корзине</h2>
+        </div>
+      </div>
+      <div id="cart-items" class="cart-items"></div>
+      <div id="cart-empty" class="empty-state" style="display:none;">В корзине пока пусто. Перейдите в <a class="small-link" href="shop.html">магазин</a> и добавьте товары.</div>
+    </div>
+
+    <aside class="panel payment-panel">
+      <span class="section-kicker">Оплата</span>
+      <h2 class="section-title payment-title">Оплата по QR-коду</h2>
+      <p class="note">Отсканируйте QR-код в приложении банка. Ссылка ведёт на страницу оплаты по номеру <strong>+7 937 511-82-28</strong>.</p>
+      <div class="qr-box">
+        <img src="assets/sber_qr.png" alt="QR-код для оплаты через Сбер">
+      </div>
+      <div class="payment-summary">
+        <div class="summary-row"><span>Товаров</span><strong id="summary-count">0</strong></div>
+        <div class="summary-row"><span>Итог к оплате</span><strong id="summary-total">0 ₽</strong></div>
+      </div>
+      <a class="btn" target="_blank" rel="noopener noreferrer" href="https://www.sberbank.com/sms/pbpn?requisiteNumber=79375118228">Открыть оплату</a>
+      <button class="btn-outline" id="clear-cart">Очистить корзину</button>
+      <p class="note">После оплаты по QR-коду можно связаться через страницу контактов и подтвердить заказ. Такой блок хорошо подходит для учебного или демонстрационного интернет-магазина техники.</p>
+    </aside>
+  </div>
+</section>
+
+<footer>
+  NightPixel © 2026<br>Корзина и оплата заказа
+</footer>
+</body>
+</html>
