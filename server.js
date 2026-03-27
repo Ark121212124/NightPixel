@@ -3,8 +3,6 @@ const fs = require("fs");
 const path = require("path");
 
 const port = process.env.PORT || 3000;
-
-// Папка, где лежит сам сайт
 const publicDir = path.join(__dirname, "nightpixel_full");
 
 const mimeTypes = {
@@ -52,17 +50,9 @@ function send404(res) {
           text-align: center;
           padding: 20px;
         }
-        .box {
-          max-width: 600px;
-        }
-        h1 {
-          font-size: 42px;
-          margin-bottom: 16px;
-        }
-        p {
-          font-size: 18px;
-          color: #b8c0d9;
-        }
+        .box { max-width: 600px; }
+        h1 { font-size: 42px; margin-bottom: 16px; }
+        p { font-size: 18px; color: #b8c0d9; }
         a {
           display: inline-block;
           margin-top: 20px;
@@ -92,21 +82,8 @@ const server = http.createServer((req, res) => {
     reqPath = "/index.html";
   }
 
-  // Поддержка адресов без .html, например /shop -> /shop.html
-  if (!path.extname(reqPath)) {
-    const htmlCandidate = path.join(publicDir, reqPath + ".html");
-    if (fs.existsSync(htmlCandidate)) {
-      const ext = ".html";
-      const contentType = mimeTypes[ext] || "application/octet-stream";
-
-      res.writeHead(200, { "Content-Type": contentType });
-      fs.createReadStream(htmlCandidate).pipe(res);
-      return;
-    }
-  }
-
   const safePath = path.normalize(reqPath).replace(/^(\.\.[/\\])+/, "");
-  const filePath = path.join(publicDir, safePath);
+  let filePath = path.join(publicDir, safePath);
 
   if (!filePath.startsWith(publicDir)) {
     res.writeHead(403, { "Content-Type": "text/plain; charset=utf-8" });
@@ -117,10 +94,25 @@ const server = http.createServer((req, res) => {
   fs.stat(filePath, (err, stats) => {
     if (!err && stats.isFile()) {
       const ext = path.extname(filePath).toLowerCase();
-      const contentType = mimeTypes[ext] || "application/octet-stream";
-
-      res.writeHead(200, { "Content-Type": contentType });
+      res.writeHead(200, {
+        "Content-Type": mimeTypes[ext] || "application/octet-stream"
+      });
       fs.createReadStream(filePath).pipe(res);
+      return;
+    }
+
+    if (!path.extname(filePath)) {
+      const htmlPath = filePath + ".html";
+
+      fs.stat(htmlPath, (htmlErr, htmlStats) => {
+        if (!htmlErr && htmlStats.isFile()) {
+          res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+          fs.createReadStream(htmlPath).pipe(res);
+          return;
+        }
+
+        send404(res);
+      });
       return;
     }
 
