@@ -1,20 +1,139 @@
 document.addEventListener('DOMContentLoaded', () => {
   const current = location.pathname.split('/').pop() || 'index.html';
+
   document.querySelectorAll('nav a[data-page]').forEach(link => {
-    if (link.getAttribute('href') === current) link.classList.add('active');
+    if (link.getAttribute('href') === current) {
+      link.classList.add('active');
+    }
   });
 
   const STORAGE_KEY = 'nightpixel-cart';
-  const currency = value => `${Number(value).toLocaleString('ru-RU')} ₽`;
-  const getCart = () => {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-    catch { return []; }
+
+  const PRODUCT_MEDIA = {
+    'np-g15': {
+      name: 'NightPixel G15 RTX',
+      images: [
+        'NightPixel G15 RTX/image.webp',
+        'NightPixel G15 RTX/image (1).webp',
+        'NightPixel G15 RTX/image (2).webp'
+      ]
+    },
+    'viewcore-27q': {
+      name: 'ViewCore 27Q Gaming',
+      images: [
+        'ViewCore 27Q Gaming/image.webp',
+        'ViewCore 27Q Gaming/image (1).webp',
+        'ViewCore 27Q Gaming/image (3).webp'
+      ]
+    },
+    'mechwave-k87': {
+      name: 'MechWave K87 RGB',
+      images: [
+        'MechWave K87 RGB/image.webp',
+        'MechWave K87 RGB/image (1).webp'
+      ]
+    },
+    'pulse-x3': {
+      name: 'Pulse X3 Wireless',
+      images: [
+        'Pulse X3 Wireless/image.webp',
+        'Pulse X3 Wireless/image (1).webp',
+        'Pulse X3 Wireless/image (2).webp'
+      ]
+    },
+    'soundforce-h7': {
+      name: 'SoundForce H7 Pro',
+      images: [
+        'SoundForce H7 Pro/image.webp',
+        'SoundForce H7 Pro/image (1).webp',
+        'SoundForce H7 Pro/image (3).webp'
+      ]
+    },
+    'flashcore-1tb': {
+      name: 'FlashCore NVMe 1TB',
+      images: [
+        'FlashCore NVMe 1TB/image.webp',
+        'FlashCore NVMe 1TB/image (1).webp',
+        'FlashCore NVMe 1TB/image (2).webp'
+      ]
+    }
   };
-  const setCart = cart => localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+
+  const normalizeMediaPath = path => encodeURI(path).replace(/%2F/g, '/');
+
+  const initProductMedia = () => {
+    document.querySelectorAll('.product-thumb[data-product-key]').forEach(thumb => {
+      const media = PRODUCT_MEDIA[thumb.dataset.productKey];
+      if (!media || !media.images || !media.images.length) return;
+
+      let mainImage = thumb.querySelector('img');
+
+      if (!mainImage) {
+        mainImage = document.createElement('img');
+        mainImage.className = 'product-image';
+        mainImage.src = normalizeMediaPath(media.images[0]);
+        mainImage.alt = media.name;
+        mainImage.loading = 'lazy';
+        thumb.appendChild(mainImage);
+      }
+
+      if (thumb.dataset.gallery !== 'true' || media.images.length < 2) return;
+      if (thumb.nextElementSibling && thumb.nextElementSibling.classList.contains('product-gallery')) return;
+
+      const gallery = document.createElement('div');
+      gallery.className = 'product-gallery';
+
+      media.images.forEach((path, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `gallery-thumb${index === 0 ? ' active' : ''}`;
+        button.setAttribute('aria-label', `${media.name}: фото ${index + 1}`);
+
+        const image = document.createElement('img');
+        image.src = normalizeMediaPath(path);
+        image.alt = `${media.name} — фото ${index + 1}`;
+        image.loading = 'lazy';
+
+        button.appendChild(image);
+
+        button.addEventListener('click', () => {
+          mainImage.src = normalizeMediaPath(path);
+          mainImage.alt = `${media.name} — фото ${index + 1}`;
+
+          gallery.querySelectorAll('.gallery-thumb').forEach(node => {
+            node.classList.remove('active');
+          });
+
+          button.classList.add('active');
+        });
+
+        gallery.appendChild(button);
+      });
+
+      thumb.insertAdjacentElement('afterend', gallery);
+    });
+  };
+
+  const currency = value => `${Number(value).toLocaleString('ru-RU')} ₽`;
+
+  const getCart = () => {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch {
+      return [];
+    }
+  };
+
+  const setCart = cart => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+  };
 
   const updateBadges = () => {
     const count = getCart().reduce((sum, item) => sum + item.qty, 0);
-    document.querySelectorAll('[data-cart-count]').forEach(el => el.textContent = count);
+
+    document.querySelectorAll('[data-cart-count]').forEach(el => {
+      el.textContent = count;
+    });
   };
 
   const showToast = text => {
@@ -22,7 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
     toast.className = 'notice-toast';
     toast.textContent = text;
     document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 1800);
+
+    setTimeout(() => {
+      toast.remove();
+    }, 1800);
   };
 
   document.querySelectorAll('.add-to-cart').forEach(button => {
@@ -30,10 +152,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const id = button.dataset.id;
       const name = button.dataset.name;
       const price = Number(button.dataset.price);
+
       const cart = getCart();
       const existing = cart.find(item => item.id === id);
-      if (existing) existing.qty += 1;
-      else cart.push({ id, name, price, qty: 1 });
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id, name, price, qty: 1 });
+      }
+
       setCart(cart);
       updateBadges();
       showToast(`Добавлено в корзину: ${name}`);
@@ -43,8 +171,13 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.filter-btn').forEach(button => {
     button.addEventListener('click', () => {
       const value = button.dataset.filter;
-      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
       button.classList.add('active');
+
       document.querySelectorAll('.product-card[data-category]').forEach(card => {
         card.style.display = value === 'all' || card.dataset.category === value ? '' : 'none';
       });
@@ -52,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const cartItems = document.getElementById('cart-items');
+
   if (cartItems) {
     const empty = document.getElementById('cart-empty');
     const totalNode = document.getElementById('summary-total');
@@ -64,9 +198,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let total = 0;
       let count = 0;
+
       cart.forEach(item => {
         total += item.price * item.qty;
         count += item.qty;
+
         const row = document.createElement('article');
         row.className = 'cart-item';
         row.innerHTML = `
@@ -82,7 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="qty-badge">${item.qty}</span>
             <button class="qty-btn" data-action="plus" data-id="${item.id}">+</button>
             <button class="remove-btn" data-action="remove" data-id="${item.id}">Удалить</button>
-          </div>`;
+          </div>
+        `;
+
         cartItems.appendChild(row);
       });
 
@@ -94,14 +232,18 @@ document.addEventListener('DOMContentLoaded', () => {
     cartItems.addEventListener('click', event => {
       const button = event.target.closest('button[data-action]');
       if (!button) return;
+
       const action = button.dataset.action;
       const id = button.dataset.id;
+
       let cart = getCart();
       const item = cart.find(entry => entry.id === id);
       if (!item) return;
+
       if (action === 'plus') item.qty += 1;
       if (action === 'minus') item.qty = Math.max(1, item.qty - 1);
       if (action === 'remove') cart = cart.filter(entry => entry.id !== id);
+
       setCart(cart);
       renderCart();
     });
@@ -115,5 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCart();
   }
 
+  initProductMedia();
   updateBadges();
 });
